@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ColorBox from './ColorBox';
 import Navbar from './Navbar';
 import './Palette.css';
+import { Twemoji } from 'react-emoji-render';
 
 class Palette extends Component{
 	constructor(props){
@@ -40,7 +41,7 @@ class Palette extends Component{
 				</div>
 				<footer className='Palette-footer'>
 					{paletteName}
-					<span className='emoji'>{emoji}</span>
+					<Twemoji className='emoji' text={`${emoji}`} />
 				</footer>
 			</div>
 		);
