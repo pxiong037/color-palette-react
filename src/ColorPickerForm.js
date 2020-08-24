@@ -5,8 +5,8 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 function ColorPickerForm(props){
 	const { paletteIsFull, colors, addNewColor } = props;
-	const [currentColor, setColor] = useState('teal');
-	const [newColorName, setColorName] = useState('');
+	const [ currentColor, setColor ] = useState('teal');
+	const [ newColorName, setColorName ] = useState('');
 	
 	const updateCurrentColor = (newColor) => {
 	  	setColor(newColor.hex);
