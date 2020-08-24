@@ -77,12 +77,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function NewPaletteForm(props){
+	const { maxColors, palettes, savePalette, history } = props;
+	
 	const classes = useStyles();
   	const [open, setOpen] = useState(false);
   	const [currentColor, setColor] = useState('teal');
-  	const [colors, setColors] = useState([]);
+  	const [colors, setColors] = useState(palettes[0].colors);
 	const [newColorName, setColorName] = useState('');
 	const [newPaletteName, setPaletteName] = useState('');
+	const paletteIsFull = colors.length >= maxColors;
 	
 	useEffect(() => {
 		ValidatorForm.addValidationRule('isColorNameUnique', (value) =>
@@ -96,7 +99,7 @@ function NewPaletteForm(props){
 			)
 		);
 		ValidatorForm.addValidationRule('isPaletteNameUnique', (value) =>
-			props.palettes.every(
+			palettes.every(
 				({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()
 			)
 		);
@@ -140,8 +143,8 @@ function NewPaletteForm(props){
 			id: newName.toLowerCase().replace(/ /g, '-'),
 			colors: colors
 		}
-		props.savePalette(newPalette);
-		props.history.push('/');
+		savePalette(newPalette);
+		history.push('/');
 	}
 	
 	const removeColor = (colorName) => {
@@ -150,6 +153,17 @@ function NewPaletteForm(props){
 	
 	const onSortEnd = ({oldIndex, newIndex}) => {
 		setColors(arrayMove(colors, oldIndex, newIndex));
+	}
+	
+	const clearColors = () => {
+		setColors([]);
+	}
+	
+	const addRandomColor = () => {
+		const allColors = palettes.map(p => p.colors).flat();
+		let random = Math.floor(Math.random() * allColors.length);
+		const randomColor = allColors[random];
+		setColors([...colors, randomColor]);
 	}
 	
   	return (
@@ -214,8 +228,21 @@ function NewPaletteForm(props){
 				<Divider />
 				<Typography variant='h4'>Design Your Palette</Typography>
 				<div>
-					<Button variant='contained' color='secondary'>Clear Palette</Button>
-					<Button variant='contained' color='primary'>Random Color</Button>
+					<Button 
+						variant='contained' 
+						color='secondary' 
+						onClick={clearColors}
+					>
+						Clear Palette
+					</Button>
+					<Button 
+						variant='contained' 
+						color='primary' 
+						onClick={addRandomColor}
+						disabled={paletteIsFull}
+					>
+						Random Color
+					</Button>
 				</div>
 				<ChromePicker 
 					color={currentColor}
@@ -232,10 +259,11 @@ function NewPaletteForm(props){
 					<Button 
 						variant='contained' 
 						color='primary'
-						style={{backgroundColor: currentColor}}
+						style={{backgroundColor: paletteIsFull ? 'grey' : currentColor}}
 						type='submit'
+						disabled={paletteIsFull}
 					>
-						Add Color
+						{paletteIsFull ? 'palette full' : 'Add Color'}
 					</Button>
 				</ValidatorForm>
 			</Drawer>
@@ -255,5 +283,9 @@ function NewPaletteForm(props){
 		</div>
   	);
 }
+
+NewPaletteForm.defaultProps = {
+	maxColors: 20
+};
 
 export default NewPaletteForm;
