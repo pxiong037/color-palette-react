@@ -20,7 +20,7 @@ class PaletteList extends Component {
 					</nav>
 					<div className={classes.palettes}>
 						{palettes.map(palette => (
-							<MiniPalette {...palette} handleClick={() => this.goToPallete(palette.id)}/>
+							<MiniPalette {...palette} handleClick={() => this.goToPallete(palette.id)} key={palette.id}/>
 						))}
 					</div>
 				</div>
