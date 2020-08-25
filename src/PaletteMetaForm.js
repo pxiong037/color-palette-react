@@ -6,19 +6,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import { Picker } from 'emoji-mart';
+import 'emoji-mart/css/emoji-mart.css';
 
 function PaletteMetaForm(props) {
-	const { palettes, handleSubmit } = props;
+	const { palettes, handleSubmit, hideForm } = props;
 	const [ newPaletteName, setNewPaletteName ] = useState('');
-	const [ open, setOpen ] = useState(true);
-
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
-
-	const handleClose = () => {
-		setOpen(false);
-	};
+	const [ open ] = useState(true);
 	
 	const handleChange = (evt) => {
 		setNewPaletteName(evt.target.value);
@@ -33,26 +27,27 @@ function PaletteMetaForm(props) {
 	});
 
 	return (
-		<Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+		<Dialog open={open} onClose={hideForm} aria-labelledby="form-dialog-title">
 			<DialogTitle id="form-dialog-title">Choose Palette Name</DialogTitle>
 			<ValidatorForm onSubmit={() => handleSubmit(newPaletteName)}>
 				<DialogContent>
 					<DialogContentText>
 						Please enter a name for your new Palette. Please make sure it's unique!
 					</DialogContentText>
-						<TextValidator 
-							label='Palette Name' 
-							name='newPaletteName'
-							value={newPaletteName} 
-							onChange={handleChange}
-							fullWidth
-							margin='normal'
-							validators={['required','isPaletteNameUnique']}
-							errorMessages={['Enter Palette Name', 'Palette Name is already in use']}
-						/>
+					<Picker/>
+					<TextValidator 
+						label='Palette Name' 
+						name='newPaletteName'
+						value={newPaletteName} 
+						onChange={handleChange}
+						fullWidth
+						margin='normal'
+						validators={['required','isPaletteNameUnique']}
+						errorMessages={['Enter Palette Name', 'Palette Name is already in use']}
+					/>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleClose} color="primary">
+					<Button onClick={hideForm} color="primary">
 						Cancel
 					</Button>
 					<Button 
