@@ -5,19 +5,28 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import styles from './styles/MiniPaletteStyles';
 
 function MiniPalette(props){
-	const { classes, paletteName, emoji, colors, handleClick } = props;
+	const { classes, paletteName, emoji, colors, handleClick, handleDelete, id } = props;
+	
+	const deletePalette = (e) => {
+		e.stopPropagation();
+		handleDelete(id);
+	}
+	
 	const miniColorBoxes = colors.map(color => (
 		<div 
 			className={classes.miniColor}
 			style={{backgroundColor: color.color}}
 			key={color.name}
 		/>
-	))
+	));
+	
 	return(
 		<div className={classes.root} onClick={handleClick}>
-			<div className={classes.delete}>
-				<DeleteIcon className={classes.deleteIcon} style={{transition: 'all 0.3s ease-in-out'}}/>
-			</div>
+			<DeleteIcon 
+				className={classes.deleteIcon} 
+				style={{transition: 'all 0.3s ease-in-out'}}
+				onClick={deletePalette}
+			/>
 			<div className={classes.colors}>
 				{miniColorBoxes}
 			</div>

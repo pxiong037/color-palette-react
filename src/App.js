@@ -11,6 +11,13 @@ function App() {
 	const savedPalettes = JSON.parse(window.localStorage.getItem('palettes'));
 	const [palettes, setPalettes] = useState(savedPalettes || seedColors);
 	
+	useEffect(() => {
+		window.localStorage.setItem(
+			'palettes', 
+			JSON.stringify(palettes)
+		);
+	}, [palettes]);
+	
 	const findPalette = (id) => {
 		return palettes.find(function(palette){
 			return palette.id === id;
@@ -21,12 +28,9 @@ function App() {
 		setPalettes([...palettes, newPalette]);
 	}
 	
-	useEffect(() => {
-		window.localStorage.setItem(
-			'palettes', 
-			JSON.stringify(palettes)
-		);
-	}, [palettes]);
+	const deletePalette = (id) => {
+		setPalettes(palettes.filter(p => p.id !== id));
+	}
 	
 	return (
 		<Switch>
@@ -44,6 +48,7 @@ function App() {
 				render={(routeProps) => 
 					<PaletteList 
 						palettes={palettes} 
+						deletePalette={deletePalette}
 						{...routeProps}
 					/>} 
 			/>
