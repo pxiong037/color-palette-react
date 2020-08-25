@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import PaletteMetaForm from './PaletteMetaForm';
 
 const drawerWidth = 400;
 
@@ -43,22 +43,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function PaletteFormNav(props){
-	const [ newPaletteName, setNewPaletteName] = useState('');
-	const { open, handleDrawerOpen } = props;
+	const { open, handleDrawerOpen, palettes, handleSubmit } = props;
 	
 	const classes = useStyles();
-	
-	useEffect(() => {
-		ValidatorForm.addValidationRule('isPaletteNameUnique', (value) =>
-			this.props.palettes.every(
-				({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()
-			)
-		);
-	});
-	
-	const handleChange = (evt) => {
-		setNewPaletteName(evt.target.value);
-	}
 	
 	return(
 			<div className={classes.root}>
@@ -88,23 +75,7 @@ function PaletteFormNav(props){
 					</Typography>
 				</Toolbar>
 				<div className={classes.navBtns}>
-					<ValidatorForm onSubmit={() => this.props.handleSubmit(newPaletteName)}>
-						<TextValidator 
-							label='Palette Name' 
-							name='newPaletteName'
-							value={newPaletteName} 
-							onChange={handleChange}
-							validators={['required','isPaletteNameUnique']}
-							errorMessages={['Enter Palette Name', 'Palette Name is already in use']}
-						/>
-						<Button 
-							variant='contained' 
-							color='primary' 
-							type='submit'
-						>
-							Save Palette
-						</Button>
-					</ValidatorForm>
+					<PaletteMetaForm palettes={palettes} handleSubmit={handleSubmit}/>
 					<Link to='/'>
 						<Button variant='contained' color='secondary'>Go Back</Button>
 					</Link>
