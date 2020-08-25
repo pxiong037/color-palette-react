@@ -15,44 +15,60 @@ import ColorPickerForm from './ColorPickerForm';
 const drawerWidth = 400;
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  hide: {
-    display: 'none',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-  },
-  content: {
-    flexGrow: 1,
-	height: 'calc(100vh - 64px)',
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
-  },
-  contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  },
+  	root: {
+    	display: 'flex',
+  	},
+  	hide: {
+    	display: 'none',
+  	},
+  	drawer: {
+    	width: drawerWidth,
+    	flexShrink: 0,
+  	},
+  	drawerPaper: {
+    	width: drawerWidth,
+		display: 'flex',
+		alignItems: 'center'
+  	},
+  	drawerHeader: {
+    	display: 'flex',
+    	alignItems: 'center',
+    	padding: theme.spacing(0, 1),
+    	// necessary for content to be below app bar
+    	...theme.mixins.toolbar,
+    	justifyContent: 'flex-end',
+  	},
+  	content: {
+    	flexGrow: 1,
+		height: 'calc(100vh - 64px)',
+    	padding: theme.spacing(3),
+    	transition: theme.transitions.create('margin', {
+      		easing: theme.transitions.easing.sharp,
+      		duration: theme.transitions.duration.leavingScreen,
+    	}),
+    	marginLeft: -drawerWidth,
+  	},
+  	contentShift: {
+    	transition: theme.transitions.create('margin', {
+      		easing: theme.transitions.easing.easeOut,
+      		duration: theme.transitions.duration.enteringScreen,
+    	}),
+    	marginLeft: 0,
+  	},
+	container: {
+		width: "90%",
+		height: "100%",
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		alignItems: "center"
+	},
+	buttons: {
+		width: "100%"
+	},
+	button: {
+		width: "50%"
+	}
 }));
 
 function NewPaletteForm(props){
@@ -118,33 +134,37 @@ function NewPaletteForm(props){
 			>
 				<div className={classes.drawerHeader}>
 					<IconButton onClick={handleDrawerClose}>
-					<ChevronLeftIcon />
+						<ChevronLeftIcon />
 					</IconButton>
 				</div>
 				<Divider />
-				<Typography variant='h4'>Design Your Palette</Typography>
-				<div>
-					<Button 
-						variant='contained' 
-						color='secondary' 
-						onClick={clearColors}
-					>
-						Clear Palette
-					</Button>
-					<Button 
-						variant='contained' 
-						color='primary' 
-						onClick={addRandomColor}
-						disabled={paletteIsFull}
-					>
-						Random Color
-					</Button>
+				<div className={classes.container}>
+					<Typography variant='h4' gutterBottom>Design Your Palette</Typography>
+					<div className={classes.buttons}>
+						<Button 
+							variant='contained' 
+							color='secondary' 
+							onClick={clearColors}
+							className={classes.button}
+						>
+							Clear Palette
+						</Button>
+						<Button 
+							variant='contained' 
+							color='primary' 
+							onClick={addRandomColor}
+							disabled={paletteIsFull}
+							className={classes.button}
+						>
+							Random Color
+						</Button>
+						<ColorPickerForm 
+							paletteIsFull={paletteIsFull} 
+							addNewColor={addNewColor}
+							colors={colors}
+						/>
+					</div>
 				</div>
-				<ColorPickerForm 
-					paletteIsFull={paletteIsFull} 
-					addNewColor={addNewColor}
-					colors={colors}
-				/>
 			</Drawer>
 			<main
 				className={clsx(classes.content, {
