@@ -12,7 +12,12 @@ function ColorPickerForm(props){
 	const classes = useStyles();
 	
 	const updateCurrentColor = (newColor) => {
-	  	setColor(newColor.hex);
+		const r = newColor.rgb.r;
+		const g = newColor.rgb.g;
+		const b = newColor.rgb.b;
+		const a = newColor.rgb.a;
+		const rgbaColor = `rgba(${r},${g},${b},${a})`;
+		setColor(rgbaColor);
 	}
 	
 	const handleChange = (evt) => {
