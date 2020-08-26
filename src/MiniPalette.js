@@ -4,12 +4,16 @@ import { Twemoji } from 'react-emoji-render';
 import DeleteIcon from '@material-ui/icons/Delete';
 import styles from './styles/MiniPaletteStyles';
 
-function MiniPalette(props){
-	const { classes, paletteName, emoji, colors, handleClick, openDialog, id } = props;
+const MiniPalette = React.memo(props =>{
+	const { classes, paletteName, emoji, colors, goToPalette, openDialog, id } = props;
 	
 	const deletePalette = (e) => {
 		e.stopPropagation();
 		openDialog(id);
+	}
+	
+	const handleClick = () => {
+		goToPalette(id);
 	}
 	
 	const miniColorBoxes = colors.map(color => (
@@ -22,6 +26,7 @@ function MiniPalette(props){
 	
 	return(
 		<div className={classes.root} onClick={handleClick}>
+			{console.log('RENDERING: ', paletteName)}
 			<DeleteIcon 
 				className={classes.deleteIcon} 
 				style={{transition: 'all 0.3s ease-in-out'}}
@@ -33,6 +38,6 @@ function MiniPalette(props){
 			<h5 className={classes.title}>{paletteName} <Twemoji className={classes.emoji} text={`${emoji}`} /></h5>
 		</div>
 	);
-}
+});
 
 export default withStyles(styles)(MiniPalette);

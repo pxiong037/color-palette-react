@@ -37,7 +37,7 @@ const styles = {
 		width: '20%',
 		display: 'inline-block',
 		margin: '0 auto',
-		marginBottom: '-3.5px'
+		marginBottom: '-4px'
 	},
 	delete: {
 		
