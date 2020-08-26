@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Palette from './Palette';
 import PaletteList from './PaletteList';
@@ -80,6 +80,7 @@ function App() {
 									/>
 								</Page>} 
 						/>
+						<Route render={() => <Redirect to='/'/>}/>
 					</Switch>
 				</CSSTransition>
 			</TransitionGroup>

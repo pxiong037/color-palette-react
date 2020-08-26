@@ -14,6 +14,7 @@ import arrayMove from 'array-move';
 import seedColors from './seedColors';
 
 function NewPaletteForm(props){
+	const originalColors = seedColors.map(palette => palette.colors).flat();
 	const { maxColors, palettes, savePalette, history } = props;
 	
 	const classes = useStyles();
@@ -53,7 +54,9 @@ function NewPaletteForm(props){
 	}
 	
 	const addRandomColor = () => {
-		const allColors = palettes.map(p => p.colors).flat();
+		let currentColors = palettes.map(palette => palette.colors).flat();
+		let allColors = originalColors.concat(currentColors);
+		allColors = allColors.filter(color => !colors.includes(color));
 		let random = Math.floor(Math.random() * allColors.length);
 		const randomColor = allColors[random];
 		setColors([...colors, randomColor]);
