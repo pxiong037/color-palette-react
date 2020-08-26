@@ -26,7 +26,6 @@ const MiniPalette = React.memo(props =>{
 	
 	return(
 		<div className={classes.root} onClick={handleClick}>
-			{console.log('RENDERING: ', paletteName)}
 			<DeleteIcon 
 				className={classes.deleteIcon} 
 				style={{transition: 'all 0.3s ease-in-out'}}

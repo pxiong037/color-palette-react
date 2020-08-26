@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import MiniPalette from './MiniPalette';
-import { withStyles } from '@material-ui/styles';
 import styles from './styles/PaletteListStyles';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import MiniPalette from './MiniPalette';
+import { withStyles } from '@material-ui/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import List from '@material-ui/core/List';

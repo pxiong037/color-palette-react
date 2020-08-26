@@ -3,6 +3,7 @@ import { ChromePicker } from 'react-color';
 import Button from '@material-ui/core/Button';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import useStyles from './styles/ColorPickerFormStyles';
+import chroma from 'chroma-js';
 
 function ColorPickerForm(props){
 	const { paletteIsFull, colors, addNewColor } = props;
@@ -53,7 +54,10 @@ function ColorPickerForm(props){
 				onChange={updateCurrentColor}
 				className={classes.picker}
 			/>
-			<ValidatorForm onSubmit={handleSubmit}>
+			<ValidatorForm 
+				onSubmit={handleSubmit}
+				instantValidate={false}
+			>
 				<TextValidator 
 					value={newColorName}
 					className={classes.colorNameInput}
@@ -63,11 +67,19 @@ function ColorPickerForm(props){
 					placeholder='Color Name'
 					onChange={handleChange}
 					validators={['required', 'isColorNameUnique', 'isColorUnique']}
-					errorMessages={['Enter a color name','Color name must be unique','Color already used']}
+					errorMessages={
+						[
+							'Enter a color name',
+							'Color name must be unique',
+							'Color already used'
+						]
+					}
 				/>
 				<Button 
 					variant='contained' 
-					color='primary'
+					color={chroma(currentColor).luminance() <= 0.25 
+							? 'primary' 
+							: 'default'}
 					style={{backgroundColor: paletteIsFull ? 'grey' : currentColor}}
 					type='submit'
 					disabled={paletteIsFull}

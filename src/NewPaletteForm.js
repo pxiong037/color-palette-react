@@ -11,13 +11,14 @@ import PaletteFormNav from './PaletteFormNav';
 import ColorPickerForm from './ColorPickerForm';
 import useStyles from './styles/NewPaletteFormStyles';
 import arrayMove from 'array-move';
+import seedColors from './seedColors';
 
 function NewPaletteForm(props){
 	const { maxColors, palettes, savePalette, history } = props;
 	
 	const classes = useStyles();
   	const [open, setOpen] = useState(false);
-  	const [colors, setColors] = useState(palettes[0].colors);
+  	const [colors, setColors] = useState(seedColors[0].colors);
 	const paletteIsFull = colors.length >= maxColors;
 
   	const handleDrawerOpen = () => {
