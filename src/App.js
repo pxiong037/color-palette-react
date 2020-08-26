@@ -48,7 +48,8 @@ function App() {
 										palettes={palettes}
 										{...routeProps} 
 									/>
-								</Page>}
+								</Page>
+							}
 						/>
 						<Route 
 							exact path='/' 
@@ -59,7 +60,8 @@ function App() {
 										deletePalette={deletePalette}
 										{...routeProps}
 									/>
-								</Page>} 
+								</Page>
+							} 
 						/>
 						<Route 
 							exact path='/palette/:id' 
@@ -68,7 +70,8 @@ function App() {
 									<Palette 
 										palette={generatePalette(findPalette(routeProps.match.params.id))}
 									/>
-								</Page>} 
+								</Page>
+							} 
 						/>
 						<Route 
 							path='/palette/:paletteId/:colorId'
@@ -78,7 +81,8 @@ function App() {
 										palette={generatePalette(findPalette(routeProps.match.params.paletteId))}
 										colorId={routeProps.match.params.colorId}
 									/>
-								</Page>} 
+								</Page>
+							} 
 						/>
 						<Route render={() => <Redirect to='/'/>}/>
 					</Switch>
